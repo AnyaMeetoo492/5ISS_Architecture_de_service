@@ -28,4 +28,7 @@ public class OrchestrateurResources {
 
         return "Température = " + temp + " | Refroidissement actif = " + actif;
     }
+  
+    
+    
 }

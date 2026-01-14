@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 
 import fr.insa.ms.Refroidissement.models.Refroidissement;
+//import fr.insa.ms.Temperature.repository.TemperatureRepository;
 
 @RestController
 @RequestMapping("/refroidissement")
@@ -25,5 +26,20 @@ public class RefroidissementResources {
 		
 		return refroid.getActive();
 	}
+	
+	/*@Autowired
+	private TemperatureRepository temperatureRepository;
+
+	@GetMapping("/last")
+	public boolean getActivation() {
+	    int temperature = temperatureRepository.findTopByOrderByDateDesc()
+	        .orElseThrow(() -> new RuntimeException("No temperature in DB"))
+	        .getValeur();
+
+	    Refroidissement refroid = new Refroidissement();
+	    refroid.verifActivation(temperature);
+
+	    return refroid.getActive();
+	}*/
 
 }

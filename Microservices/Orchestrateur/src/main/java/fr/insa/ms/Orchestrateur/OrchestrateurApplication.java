@@ -9,14 +9,13 @@ import org.springframework.web.client.RestTemplate;
 @SpringBootApplication
 public class OrchestrateurApplication {
 
-	@Bean
-	@LoadBalanced
-	public RestTemplate restTemplate() {
-		return new RestTemplate();
-	}
-	
-	public static void main(String[] args) {
-		SpringApplication.run(OrchestrateurApplication.class, args);
-	}
-
+    @Bean
+    @LoadBalanced
+    public RestTemplate restTemplate() {
+        return new RestTemplate();
+    }
+    
+    public static void main(String[] args) {
+        SpringApplication.run(OrchestrateurApplication.class, args);
+    }
 }

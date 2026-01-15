@@ -56,6 +56,15 @@ Installer tous les modules (y compris les dépendances) :
 mvn clean install
 ```
 
+### Mettre à jour les dépendances
+
+Pour mettre à jour les dépendances de tous les projets :
+```bash
+mvn clean install -U
+```
+
+La flag `-U` force Maven à télécharger les dernières versions des dépendances depuis les dépôts.
+
 ### Utiliser le script de démarrage automatique
 
 Pour démarrer tous les microservices automatiquement en ordre avec un seul script :

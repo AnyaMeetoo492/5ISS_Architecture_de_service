@@ -17,6 +17,19 @@ LOG_DIR="$PROJECT_ROOT/logs"
 mkdir -p "$LOG_DIR"
 
 echo "=========================================="
+echo "Mise à jour des dépendances..."
+echo "=========================================="
+
+cd "$PROJECT_ROOT"
+mvn clean install -U -DskipTests
+
+if [ $? -ne 0 ]; then
+    echo "Erreur lors de la mise à jour. Arrêt du script."
+    exit 1
+fi
+
+echo ""
+echo "=========================================="
 echo "Construction de tous les packages..."
 echo "=========================================="
 

@@ -38,6 +38,79 @@ Chaque citerne aura ses capteurs et ses actionnneurs.
 ![Architecture services](Images/Architecture_Services.png)
 ![Base de données](Images/Database.png)
 
+## Démarrage - Exécution des Microservices
+
+### Prérequis
+- Java 21 ou supérieur
+- Maven 3.6+
+
+### Construire tous les microservices
+
+Construire tous les microservices dans l'ordre :
+```bash
+mvn clean package
+```
+
+Installer tous les modules (y compris les dépendances) :
+```bash
+mvn clean install
+```
+
+### Utiliser le script de démarrage automatique
+
+Pour démarrer tous les microservices automatiquement en ordre avec un seul script :
+```bash
+./start-services.sh
+```
+
+Ce script :
+- Démarre tous les services dans l'ordre avec des délais entre chaque
+- Exécute chaque service en arrière-plan
+- Crée des fichiers logs pour chaque service dans le dossier `logs/`
+- Affiche le statut et les emplacements des fichiers logs
+- Arrête tous les services quand vous appuyez sur **Ctrl+C**
+
+### Exécuter des microservices individuels
+
+Exécuter un microservice spécifique :
+```bash
+cd Microservices/Configuration
+mvn spring-boot:run
+```
+
+Remplacer `Configuration` par :
+- `Decouverte` - Service de découverte
+- `Temperature` - Surveillance de température
+- `Refroidissement` - Contrôle de refroidissement
+- `Orchestrateur` - Service d'orchestration
+
+### Exécuter tous les services
+
+Démarrer tous les microservices (chacun dans un terminal séparé ou un processus en arrière-plan) :
+```bash
+# Terminal 1 - Service Configuration
+cd Microservices/Configuration && mvn spring-boot:run
+
+# Terminal 2 - Service Découverte
+cd Microservices/Decouverte && mvn spring-boot:run
+
+# Terminal 3 - Service Température
+cd Microservices/Temperature && mvn spring-boot:run
+
+# Terminal 4 - Service Refroidissement
+cd Microservices/Refroidissement && mvn spring-boot:run
+
+# Terminal 5 - Service Orchestrateur
+cd Microservices/Orchestrateur && mvn spring-boot:run
+```
+
+### Construire un module spécifique
+
+Construire un seul microservice sans construire tous les autres :
+```bash
+mvn -pl Microservices/Configuration clean package
+```
+
 ## Interface Utilisateur
 
 ## Screens 

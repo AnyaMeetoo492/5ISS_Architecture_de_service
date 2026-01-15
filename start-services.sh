@@ -59,6 +59,14 @@ cleanup() {
         fi
     done
     echo "Tous les services ont été arrêtés."
+    
+    echo ""
+    echo "=========================================="
+    echo "Nettoyage du projet..."
+    echo "=========================================="
+    cd "$PROJECT_ROOT"
+    mvn clean
+    echo "Nettoyage terminé."
     exit 0
 }
 

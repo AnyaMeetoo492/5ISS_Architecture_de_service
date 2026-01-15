@@ -64,11 +64,15 @@ Pour démarrer tous les microservices automatiquement en ordre avec un seul scri
 ```
 
 Ce script :
+- **Construit d'abord tous les packages** avec `mvn clean package` (automatique)
+- Vérifie qu'il n'y a pas d'erreurs de compilation
 - Démarre tous les services dans l'ordre avec des délais entre chaque
 - Exécute chaque service en arrière-plan
 - Crée des fichiers logs pour chaque service dans le dossier `logs/`
 - Affiche le statut et les emplacements des fichiers logs
 - Arrête tous les services quand vous appuyez sur **Ctrl+C**
+
+**Avantage :** Un seul script pour tout faire - construction + démarrage des services !
 
 ### Exécuter des microservices individuels
 

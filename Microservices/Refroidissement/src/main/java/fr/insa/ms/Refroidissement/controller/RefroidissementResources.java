@@ -17,6 +17,7 @@ public class RefroidissementResources {
 	@Autowired
     private RestTemplate restTemplate;
 	
+	//Without the database
 	@GetMapping("/{id}")
 	public boolean getActivation(@PathVariable("id") int id) {
 		int temperature = restTemplate.getForObject("http://TEMPERATURE/temperature/" + id, Integer.class);
@@ -27,19 +28,14 @@ public class RefroidissementResources {
 		return refroid.getActive();
 	}
 	
-	/*@Autowired
-	private TemperatureRepository temperatureRepository;
-
 	@GetMapping("/last")
 	public boolean getActivation() {
-	    int temperature = temperatureRepository.findTopByOrderByDateDesc()
-	        .orElseThrow(() -> new RuntimeException("No temperature in DB"))
-	        .getValeur();
-
-	    Refroidissement refroid = new Refroidissement();
-	    refroid.verifActivation(temperature);
-
-	    return refroid.getActive();
-	}*/
+		int temperature = restTemplate.getForObject("http://TEMPERATURE/temperature/last", Integer.class);
+		
+		Refroidissement refroid = new Refroidissement();
+		refroid.verifActivation(temperature);
+		
+		return refroid.getActive();
+	}
 
 }

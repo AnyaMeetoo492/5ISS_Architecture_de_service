@@ -14,15 +14,15 @@ public class OrchestrateurResources {
     @Autowired
     private RestTemplate restTemplate;
 
-    @GetMapping("/{id}")
-    public String orchestrer(@PathVariable int id) {
+    @GetMapping("/last")
+    public String orchestrer() {
         int temp = restTemplate.getForObject(
-            "http://TEMPERATURE/temperature/" + id,
+            "http://TEMPERATURE/temperature/last",
             Integer.class
         );
 
         boolean actif = restTemplate.getForObject(
-            "http://REFROIDISSEMENT/refroidissement/" + id,
+            "http://REFROIDISSEMENT/refroidissement/last",
             Boolean.class
         );
 

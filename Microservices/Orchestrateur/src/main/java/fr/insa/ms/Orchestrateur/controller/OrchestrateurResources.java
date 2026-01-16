@@ -7,6 +7,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 
+import fr.insa.ms.Refroidissement.models.*;
+
 @RestController
 @RequestMapping("/orchestrateur")
 public class OrchestrateurResources {
@@ -14,19 +16,21 @@ public class OrchestrateurResources {
     @Autowired
     private RestTemplate restTemplate;
 
-    @GetMapping("/last")
-    public String orchestrer() {
+    @GetMapping("/decision/{citerneID}")
+    public String orchestrer(@PathVariable int citerneID) {
         int temp = restTemplate.getForObject(
-            "http://TEMPERATURE/temperature/last",
+            "http://TEMPERATURE/temperature/last/" + citerneID,
             Integer.class
         );
 
-        boolean actif = restTemplate.getForObject(
-            "http://REFROIDISSEMENT/refroidissement/last",
-            Boolean.class
-        );
+        boolean actif = temp > 30;
 
-        return "Température = " + temp + " | Refroidissement actif = " + actif;
+        restTemplate.postForObject(
+            "http://REFROIDISSEMENT/refroidissement/apply",
+            new Refroidissement(citerneID, actif),
+            Void.class
+        );
+        return "Citerne = " + citerneID + " | Température = " + temp + " | Refroidissement actif = " + actif;
     }
   
     

@@ -16,15 +16,28 @@ public class TemperatureEntity {
 
     @Column(name = "valeur")
     private int valeur;
+    
+    @Column(name = "CiterneID")
+    private int citerneID;
+
 
     public TemperatureEntity() {}
 
-    public TemperatureEntity(int valeur, LocalDateTime date) {
+    public TemperatureEntity(int valeur, int citerneID, LocalDateTime date) {
         this.date = date;
         this.valeur = valeur;
+        this.citerneID = citerneID;
     }
 
-    public LocalDateTime getDate() {
+    public int getCiterneID() {
+		return citerneID;
+	}
+
+	public void setCiterneID(int citerneID) {
+		this.citerneID = citerneID;
+	}
+
+	public LocalDateTime getDate() {
         return date;
     }
 

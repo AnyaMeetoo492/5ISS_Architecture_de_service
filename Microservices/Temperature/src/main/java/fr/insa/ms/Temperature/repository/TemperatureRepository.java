@@ -6,5 +6,5 @@ import java.time.LocalDateTime;
 import java.util.Optional;
 
 public interface TemperatureRepository extends JpaRepository<TemperatureEntity, LocalDateTime> {
-    Optional<TemperatureEntity> findTopByOrderByDateDesc();
+    Optional<TemperatureEntity> findTopByCiterneIDOrderByDateDesc(int citerneID);
 }

@@ -44,6 +44,24 @@ Chaque citerne aura ses capteurs et ses actionnneurs.
 - Java 21 ou supérieur
 - Maven 3.6+
 
+### Utiliser le script de démarrage automatique
+
+Pour démarrer tous les microservices automatiquement en ordre avec un seul script :
+```bash
+./start-services.sh
+```
+
+Ce script :
+- **Construit d'abord tous les packages** avec `mvn clean package` (automatique)
+- Vérifie qu'il n'y a pas d'erreurs de compilation
+- Démarre tous les services dans l'ordre avec des délais entre chaque
+- Exécute chaque service en arrière-plan
+- Crée des fichiers logs pour chaque service dans le dossier `logs/`
+- Affiche le statut et les emplacements des fichiers logs
+- Arrête tous les services quand vous appuyez sur **Ctrl+C**
+
+**Avantage :** Un seul script pour tout faire - construction + démarrage des services !
+
 ### Construire tous les microservices
 
 Construire tous les microservices dans l'ordre :
@@ -64,24 +82,6 @@ mvn clean install -U
 ```
 
 La flag `-U` force Maven à télécharger les dernières versions des dépendances depuis les dépôts.
-
-### Utiliser le script de démarrage automatique
-
-Pour démarrer tous les microservices automatiquement en ordre avec un seul script :
-```bash
-./start-services.sh
-```
-
-Ce script :
-- **Construit d'abord tous les packages** avec `mvn clean package` (automatique)
-- Vérifie qu'il n'y a pas d'erreurs de compilation
-- Démarre tous les services dans l'ordre avec des délais entre chaque
-- Exécute chaque service en arrière-plan
-- Crée des fichiers logs pour chaque service dans le dossier `logs/`
-- Affiche le statut et les emplacements des fichiers logs
-- Arrête tous les services quand vous appuyez sur **Ctrl+C**
-
-**Avantage :** Un seul script pour tout faire - construction + démarrage des services !
 
 ### Exécuter des microservices individuels
 

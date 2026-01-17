@@ -1,5 +1,7 @@
 package fr.insa.ms.Log.controller;
 
+import java.time.LocalDateTime;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -29,7 +31,7 @@ public class LogRessources {
 	
 	@PostMapping("/add")
 	public void setLog(@RequestBody LogEntity log) {
-		LogEntity record = new LogEntity(log.getCiterneID(), log.getActionType(), log.getDate(), log.getObservation());
+		LogEntity record = new LogEntity(log.getCiterneID(), log.getActionType(), LocalDateTime.now(), log.getObservation());
 		logRepository.save(record);
 	}
 

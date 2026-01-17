@@ -1,7 +1,5 @@
 package fr.insa.ms.Orchestrateur.controller;
 
-import java.time.LocalDateTime;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -47,7 +45,7 @@ public class OrchestrateurResources {
         
         restTemplate.postForObject(
         		"http://LOG/log/add", 
-        		new LogEntity(citerneID, ActionType, LocalDateTime.now(), Observation), 
+        		new LogEntity(citerneID, ActionType, Observation), 
         		Void.class);
         
         return "Citerne = " + citerneID + " | Température = " + temp + " | Refroidissement actif = " + actif;

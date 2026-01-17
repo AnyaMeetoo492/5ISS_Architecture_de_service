@@ -17,56 +17,63 @@ public class LogEntity {
     private Integer logID;
 	
 	@Column(name = "ActionType")
-	private String ActionType;
+	private String actionType;
 	
 	@Column(name = "Date")
-	private LocalDateTime Date;
+	private LocalDateTime date;
 	
 	@Column(name = "Observation")
-	private String Observation;
+	private String observation;
 	
     @Column(name = "CiterneID")
-    private int CiterneID;
+    private int citerneID;
 	
 	public LogEntity() {}
 	
 	public LogEntity(int citerneID, String actionType, LocalDateTime date, String observation) {
 		super();
-		CiterneID = citerneID;
-		ActionType = actionType;
-		Date = date;
-		Observation = observation;
+		this.citerneID = citerneID;
+		this.actionType = actionType;
+		this.date = date;
+		this.observation = observation;
+	}
+	
+	public LogEntity(int citerneID, String actionType, String observation) {
+		super();
+		this.citerneID = citerneID;
+		this.actionType = actionType;
+		this.observation = observation;
 	}
 
 	public int getCiterneID() {
-		return CiterneID;
+		return citerneID;
 	}
 
 	public void setCiterneID(int citerneID) {
-		CiterneID = citerneID;
+		this.citerneID = citerneID;
 	}
 
 	public String getActionType() {
-		return ActionType;
+		return actionType;
 	}
 
 	public void setActionType(String actionType) {
-		ActionType = actionType;
+		this.actionType = actionType;
 	}
 
 	public LocalDateTime getDate() {
-		return Date;
+		return date;
 	}
 
 	public void setDate(LocalDateTime date) {
-		Date = date;
+		this.date = date;
 	}
 
 	public String getObservation() {
-		return Observation;
+		return observation;
 	}
 
 	public void setObservation(String observation) {
-		Observation = observation;
+		this.observation = observation;
 	}
 }

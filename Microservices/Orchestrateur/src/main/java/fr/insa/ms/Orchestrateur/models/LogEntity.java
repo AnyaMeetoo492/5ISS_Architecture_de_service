@@ -5,51 +5,58 @@ import java.time.LocalDateTime;
 public class LogEntity {
 	
 	private Integer logID;
-	private String ActionType;
-	private LocalDateTime Date;
-	private String Observation;
-    private int CiterneID;
+	private String actionType;
+	private LocalDateTime date;
+	private String observation;
+    private int citerneID;
 	
 	public LogEntity() {}
 	
 	public LogEntity(int citerneID, String actionType, LocalDateTime date, String observation) {
 		super();
-		CiterneID = citerneID;
-		ActionType = actionType;
-		Date = date;
-		Observation = observation;
+		this.citerneID = citerneID;
+		this.actionType = actionType;
+		this.date = date;
+		this.observation = observation;
+	}
+	
+	public LogEntity(int citerneID, String actionType, String observation) {
+		super();
+		this.citerneID = citerneID;
+		this.actionType = actionType;
+		this.observation = observation;
 	}
 
 	public int getCiterneID() {
-		return CiterneID;
+		return citerneID;
 	}
 
 	public void setCiterneID(int citerneID) {
-		CiterneID = citerneID;
+		this.citerneID = citerneID;
 	}
 
 	public String getActionType() {
-		return ActionType;
+		return actionType;
 	}
 
 	public void setActionType(String actionType) {
-		ActionType = actionType;
+		this.actionType = actionType;
 	}
 
 	public LocalDateTime getDate() {
-		return Date;
+		return date;
 	}
 
 	public void setDate(LocalDateTime date) {
-		Date = date;
+		this.date = date;
 	}
 
 	public String getObservation() {
-		return Observation;
+		return observation;
 	}
 
 	public void setObservation(String observation) {
-		Observation = observation;
+		this.observation = observation;
 	}
 
 	public Integer getLogID() {

@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -33,12 +34,20 @@ public class CiternesRessources {
 	
 	@PostMapping("/add/{idCiterne}")
 	public void addCiterne(@PathVariable int idCiterne, @RequestParam String citerneName) {
-		CiterneEntity record = new CiterneEntity(idCiterne, citerneName, LocalDate.now(), LocalDate.now().plusYears(2));
+		CiterneEntity record = new CiterneEntity(idCiterne, citerneName, LocalDate.now(), LocalDate.now().plusYears(2), false);
 		citernesRepository.save(record);
 	}
 	
 	@DeleteMapping("/delete/{idCiterne}")
 	public void deleteCiterne(@PathVariable int idCiterne) {
 		citernesRepository.deleteById(idCiterne);
+	}
+	
+	@PutMapping("/updateliquide/{idCiterne}")
+	public CiterneEntity updateLiquide(@PathVariable int idCiterne, @RequestParam Boolean contientLiquide) {
+		CiterneEntity citerne = citernesRepository.findById(idCiterne)
+		        .orElseThrow(() -> new RuntimeException("Citerne non trouvée"));
+		citerne.setContientLiquide(contientLiquide);
+		return citernesRepository.save(citerne);
 	}
 }

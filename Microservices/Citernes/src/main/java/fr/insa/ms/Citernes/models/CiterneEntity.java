@@ -24,15 +24,28 @@ public class CiterneEntity {
 	@Column(name = "DateDeFin")
 	private LocalDate endDate;
 	
+	@Column(name = "ContientLiquide")
+	private Boolean contientLiquide;
+	
 	public CiterneEntity() {};
 	
-	public CiterneEntity(int citerneID, String citerneName, LocalDate startDate, LocalDate endDate) {
+	public CiterneEntity(int citerneID, String citerneName, LocalDate startDate, LocalDate endDate, Boolean contientLiquide) {
 		super();
 		this.citerneID = citerneID;
 		this.citerneName = citerneName;
 		this.startDate = startDate;
 		this.endDate = endDate;
+		this.contientLiquide = contientLiquide;
 	}
+	
+	public boolean isContientLiquide() {
+		return contientLiquide;
+	}
+
+	public void setContientLiquide(Boolean contientLiquide) {
+		this.contientLiquide = contientLiquide;
+	}
+
 	public int getCiterneID() {
 		return citerneID;
 	}

@@ -25,6 +25,11 @@ public class OrchestrateurResources {
             Integer.class
         );
         
+        float valueliquide = restTemplate.getForObject(
+      		"http://NIVEAULIQUIDE/niveauliquide/last/" + citerneID,
+             Integer.class
+        );
+        
         String ActionType = "";
         String Observation = "";
         boolean actif = temp > 30;
@@ -36,6 +41,7 @@ public class OrchestrateurResources {
         	ActionType = "";
         	Observation = "OK !";
         }
+        Boolean liquide = valueliquide > 0;
 	
         restTemplate.postForObject(
             "http://REFROIDISSEMENT/refroidissement/apply",
@@ -48,6 +54,10 @@ public class OrchestrateurResources {
         		new LogEntity(citerneID, ActionType, Observation), 
         		Void.class);
         
-        return "Citerne = " + citerneID + " | Température = " + temp + " | Refroidissement actif = " + actif;
+        restTemplate.put(
+        		"http://CITERNES/citernes/updateliquide/" + citerneID + "?contientLiquide=" + liquide, 
+        		null);
+        
+        return "Citerne = " + citerneID + " | Température = " + temp + " | Refroidissement actif = " + actif + " | Niveau liquide = " + valueliquide;
     }
 }

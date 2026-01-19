@@ -8,6 +8,7 @@ PROJECT_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 SERVICES=(
     "Configuration"
     "Decouverte"
+    "Citernes"
     "Temperature"
     "Refroidissement"
     "Orchestrateur"

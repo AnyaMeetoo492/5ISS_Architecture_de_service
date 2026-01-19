@@ -93,6 +93,7 @@ mvn spring-boot:run
 
 Remplacer `Configuration` par :
 - `Decouverte` - Service de découverte
+- `Citernes` - Gestion des citernes
 - `Temperature` - Surveillance de température
 - `Refroidissement` - Contrôle de refroidissement
 - `Orchestrateur` - Service d'orchestration
@@ -107,13 +108,16 @@ cd Microservices/Configuration && mvn spring-boot:run
 # Terminal 2 - Service Découverte
 cd Microservices/Decouverte && mvn spring-boot:run
 
-# Terminal 3 - Service Température
+# Terminal 3 - Service Citernes
+cd Microservices/Citernes && mvn spring-boot:run
+
+# Terminal 4 - Service Température
 cd Microservices/Temperature && mvn spring-boot:run
 
-# Terminal 4 - Service Refroidissement
+# Terminal 5 - Service Refroidissement
 cd Microservices/Refroidissement && mvn spring-boot:run
 
-# Terminal 5 - Service Orchestrateur
+# Terminal 6 - Service Orchestrateur
 cd Microservices/Orchestrateur && mvn spring-boot:run
 ```
 

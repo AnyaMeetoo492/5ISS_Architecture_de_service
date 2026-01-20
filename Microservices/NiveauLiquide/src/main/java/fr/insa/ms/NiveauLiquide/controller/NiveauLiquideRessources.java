@@ -23,6 +23,11 @@ public class NiveauLiquideRessources {
 	@Autowired
 	private NiveauLiquideRepository niveauliquideRepository;
 	
+	@GetMapping("/list")
+	public Iterable<NiveauLiquideEntity> getHumidite() {
+		return niveauliquideRepository.findAll();
+	}
+	
 	@PostMapping("/add")
 	public void setNiveauLiquide(@RequestParam float valeur, @RequestParam int citerneID) {
 		NiveauLiquideEntity record = new NiveauLiquideEntity(LocalDateTime.now(), valeur, citerneID);

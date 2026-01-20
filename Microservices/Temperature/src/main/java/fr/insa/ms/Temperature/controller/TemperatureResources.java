@@ -23,6 +23,11 @@ public class TemperatureResources {
 	@Autowired
 	private TemperatureRepository temperatureRepository;
 	
+	@GetMapping("/list")
+	public Iterable<TemperatureEntity> getTemperature() {
+		return temperatureRepository.findAll();
+	}
+	
 	@GetMapping("/last/{citerneID}")
 	public int getLastTemperatureFromDB(@PathVariable int citerneID) {
 		Optional<TemperatureEntity> opt = temperatureRepository.findTopByCiterneIDOrderByDateDesc(citerneID);

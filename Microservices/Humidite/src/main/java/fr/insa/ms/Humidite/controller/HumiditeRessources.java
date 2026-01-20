@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
 
 import fr.insa.ms.Humidite.models.HumiditeEntity;
-import fr.insa.ms.Humidite.repository.HumiditeRepository;
+import fr.insa.ms.Humidite.repository.HumiditeRepository;;
 
 @RestController
 @RequestMapping("/humidite")
@@ -22,6 +22,11 @@ public class HumiditeRessources {
 	
 	@Autowired
 	private HumiditeRepository humuditeRepository;
+	
+	@GetMapping("/list")
+	public Iterable<HumiditeEntity> getHumidite() {
+		return humuditeRepository.findAll();
+	}
 	
 	@PostMapping("/add")
 	public void setHumidite(@RequestParam float valeur, @RequestParam int citerneID) {

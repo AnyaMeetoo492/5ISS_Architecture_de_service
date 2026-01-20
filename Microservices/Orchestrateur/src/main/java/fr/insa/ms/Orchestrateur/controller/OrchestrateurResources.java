@@ -75,6 +75,6 @@ public class OrchestrateurResources {
         		"http://CITERNES/citernes/updateliquide/" + citerneID + "?contientLiquide=" + liquide, 
         		null);
         
-        return "Citerne = " + citerneID + " | Température = " + temp + " | Refroidissement actif = " + actif_temp + " | Extraction actif = " + actif_hum + " | Niveau liquide = " + valueliquide;
+        return "Citerne = " + citerneID + " | Température = " + temp + " | Humidité = " + hum + " | Refroidissement actif = " + actif_temp + " | Extraction actif = " + actif_hum + " | Niveau liquide = " + valueliquide;
     }
 }

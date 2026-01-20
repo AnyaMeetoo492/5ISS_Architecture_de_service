@@ -25,6 +25,11 @@ public class OrchestrateurResources {
             Integer.class
         );
         
+        int hum = restTemplate.getForObject(
+                "http://HUMIDITE/humidite/last/" + citerneID,
+                Integer.class
+            );
+        
         float valueliquide = restTemplate.getForObject(
       		"http://NIVEAULIQUIDE/niveauliquide/last/" + citerneID,
              Integer.class
@@ -32,22 +37,34 @@ public class OrchestrateurResources {
         
         String ActionType = "";
         String Observation = "";
-        boolean actif = temp > 30;
-        if (actif) {
+        boolean actif_temp = temp > 30;
+        boolean actif_hum = hum > 40.0;
+        if (actif_temp) {
         	ActionType = "Refroidissement";
         	Observation = "Température de la citerne élevée !";
+        } 
+        if (actif_hum) {
+        	ActionType = "Extraction";
+        	Observation = "Humidite de la citerne élevée !";
         }
-        else {
+        if (!actif_hum && !actif_temp) {
         	ActionType = "";
         	Observation = "OK !";
         }
+        if (actif_hum && actif_temp) {}
         Boolean liquide = valueliquide > 0;
 	
         restTemplate.postForObject(
             "http://REFROIDISSEMENT/refroidissement/apply",
-            new Refroidissement(citerneID, actif),
+            new Refroidissement(citerneID, actif_temp),
             Void.class
         );
+        
+        restTemplate.postForObject(
+                "http://EXTRACTION/extraction/apply",
+                new Refroidissement(citerneID, actif_temp),
+                Void.class
+            );
         
         restTemplate.postForObject(
         		"http://LOG/log/add", 
@@ -58,6 +75,6 @@ public class OrchestrateurResources {
         		"http://CITERNES/citernes/updateliquide/" + citerneID + "?contientLiquide=" + liquide, 
         		null);
         
-        return "Citerne = " + citerneID + " | Température = " + temp + " | Refroidissement actif = " + actif + " | Niveau liquide = " + valueliquide;
+        return "Citerne = " + citerneID + " | Température = " + temp + " | Refroidissement actif = " + actif_temp + " | Extraction actif = " + actif_hum + " | Niveau liquide = " + valueliquide;
     }
 }

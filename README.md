@@ -198,6 +198,40 @@ Contrôle du système d'extraction d'humidité.
 
 ## Interface Utilisateur
 
-## Screens 
+Une interface web moderne et responsive a été développée pour monitorer et contrôler les citernes de vin.
+
+### Accès à l'interface
+
+L'interface est accessible sur le port **8078** :
+- URL: [http://localhost:8078](http://localhost:8078)
+
+### Fonctionnalités
+
+- **Monitoring en temps réel** : Affichage des valeurs actuelles de température, humidité et niveau de liquide
+- **Contrôle des citernes** : Sélection de la citerne à surveiller via un menu déroulant
+- **Ajout de mesures** : Possibilité d'ajouter manuellement des valeurs pour chaque capteur
+- **Statut des services** : Visualisation de l'état de tous les microservices (actif/inactif)
+- **Actions automatiques** : Affichage de l'état du refroidissement et de l'extraction
+- **Derniers événements** : Consultation des derniers logs et observations
+- **Orchestration** : Bouton pour lancer manuellement l'analyse de l'orchestrateur
+
+### Design
+
+L'interface utilise :
+- Design moderne avec dégradés et animations fluides
+- Thème sombre pour une meilleure lisibilité
+- Interface responsive compatible mobile et desktop
+- Icônes emoji pour une identification rapide
+- Notifications toast pour les confirmations d'actions
+- Rafraîchissement automatique des données toutes les 5 secondes
+
+### Lancement du microservice Interface
+
+```bash
+cd Microservices/Interface
+mvn spring-boot:run
+```
+
+Ou avec le script de démarrage automatique qui inclut désormais l'interface.
 
 ## Conclusion

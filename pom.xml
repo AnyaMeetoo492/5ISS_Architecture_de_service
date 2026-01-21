@@ -25,6 +25,7 @@
         <module>Microservices/Temperature</module>
         <module>Microservices/Refroidissement</module>
         <module>Microservices/Orchestrateur</module>
+        <module>Microservices/Interface</module>
     </modules>
 
     <properties>

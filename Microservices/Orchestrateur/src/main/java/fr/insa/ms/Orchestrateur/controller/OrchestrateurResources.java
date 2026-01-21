@@ -62,7 +62,7 @@ public class OrchestrateurResources {
         
         restTemplate.postForObject(
                 "http://EXTRACTION/extraction/apply",
-                new Refroidissement(citerneID, actif_temp),
+                new Refroidissement(citerneID, actif_hum),
                 Void.class
             );
         

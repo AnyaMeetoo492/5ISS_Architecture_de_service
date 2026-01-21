@@ -16,6 +16,7 @@ SERVICES=(
     "Temperature"
     "Refroidissement"
     "Orchestrateur"
+    "Interface"
 )
 
 LOG_DIR="$PROJECT_ROOT/logs"

@@ -82,16 +82,6 @@ L'interface est accessible sur le port **8078** :
 - **Derniers événements** : Consultation des derniers logs et observations
 - **Orchestration** : Bouton pour lancer manuellement l'analyse de l'orchestrateur
 
-### Design
-
-L'interface utilise :
-- Design moderne avec dégradés et animations fluides
-- Thème sombre pour une meilleure lisibilité
-- Interface responsive compatible mobile et desktop
-- Icônes emoji pour une identification rapide
-- Notifications toast pour les confirmations d'actions
-- Rafraîchissement automatique des données toutes les 5 secondes
-
 ### Lancement du microservice Interface
 
 ```bash

@@ -87,39 +87,21 @@ La flag `-U` force Maven à télécharger les dernières versions des dépendanc
 
 Exécuter un microservice spécifique :
 ```bash
-cd Microservices/Configuration
+cd Microservices/<Nom_microservice>
 mvn spring-boot:run
 ```
 
-Remplacer `Configuration` par :
+Remplacer par :
+- `Configuration` - Service de configuration centralisée
 - `Decouverte` - Service de découverte
+- `Orchestrateur` - Service d'orchestration
 - `Citernes` - Gestion des citernes
 - `Temperature` - Surveillance de température
+- `NiveauLiquide` - Surveillance du niveau de liquide
+- `Humidite` - Surveillance de l'humidité
+- `Log` - Service de journalisation
 - `Refroidissement` - Contrôle de refroidissement
-- `Orchestrateur` - Service d'orchestration
-
-### Exécuter tous les services
-
-Démarrer tous les microservices (chacun dans un terminal séparé ou un processus en arrière-plan) :
-```bash
-# Terminal 1 - Service Configuration
-cd Microservices/Configuration && mvn spring-boot:run
-
-# Terminal 2 - Service Découverte
-cd Microservices/Decouverte && mvn spring-boot:run
-
-# Terminal 3 - Service Citernes
-cd Microservices/Citernes && mvn spring-boot:run
-
-# Terminal 4 - Service Température
-cd Microservices/Temperature && mvn spring-boot:run
-
-# Terminal 5 - Service Refroidissement
-cd Microservices/Refroidissement && mvn spring-boot:run
-
-# Terminal 6 - Service Orchestrateur
-cd Microservices/Orchestrateur && mvn spring-boot:run
-```
+- `Extraction` - Contrôle d'extraction d'humidité
 
 ### Construire un module spécifique
 
@@ -127,6 +109,92 @@ Construire un seul microservice sans construire tous les autres :
 ```bash
 mvn -pl Microservices/Configuration clean package
 ```
+
+## API Endpoints
+
+Voici la liste complète de tous les microservices avec leurs ports et endpoints :
+
+### Configuration - Port 8888
+Service de configuration centralisée pour tous les microservices.
+
+### Decouverte - Port 8761
+Service de découverte Eureka pour l'enregistrement et la localisation des microservices.
+
+### Orchestrateur - Port 8079
+Service d'orchestration principal qui coordonne les actions basées sur les mesures des capteurs.
+
+- **GET** [localhost:8079/orchestrateur/decision/{citerneID}](http://localhost:8079/orchestrateur/decision/{citerneID})
+  - Analyse les paramètres d'une citerne et déclenche les actions nécessaires
+
+### Citernes - Port 8082
+Gestion des citernes de vin.
+
+- **GET** [localhost:8082/citernes/list](http://localhost:8082/citernes/list)
+  - Liste toutes les citernes
+- **GET** [localhost:8082/citernes/list/{id}](http://localhost:8082/citernes/list/{id})
+  - Obtenir les informations d'une citerne spécifique
+- **POST** [localhost:8082/citernes/add/{idCiterne}?citerneName={name}](http://localhost:8082/citernes/add/{idCiterne}?citerneName={name})
+  - Ajouter une nouvelle citerne
+- **DELETE** [localhost:8082/citernes/delete/{idCiterne}](http://localhost:8082/citernes/delete/{idCiterne})
+  - Supprimer une citerne
+- **PUT** [localhost:8082/citernes/updateliquide/{idCiterne}?contientLiquide={boolean}](http://localhost:8082/citernes/updateliquide/{idCiterne}?contientLiquide={boolean})
+  - Mettre à jour le statut de présence de liquide
+
+### Temperature - Port 8080
+Surveillance de la température des citernes.
+
+- **GET** [localhost:8080/temperature/list](http://localhost:8080/temperature/list)
+  - Liste toutes les mesures de température
+- **GET** [localhost:8080/temperature/last/{citerneID}](http://localhost:8080/temperature/last/{citerneID})
+  - Obtenir la dernière température d'une citerne
+- **POST** [localhost:8080/temperature/add?valeur={int}&citerneID={int}](http://localhost:8080/temperature/add?valeur={int}&citerneID={int})
+  - Ajouter une nouvelle mesure de température
+
+### NiveauLiquide - Port 8084
+Surveillance du niveau de liquide dans les citernes.
+
+- **GET** [localhost:8084/niveauliquide/list](http://localhost:8084/niveauliquide/list)
+  - Liste toutes les mesures de niveau de liquide
+- **GET** [localhost:8084/niveauliquide/last/{citerneID}](http://localhost:8084/niveauliquide/last/{citerneID})
+  - Obtenir le dernier niveau de liquide d'une citerne
+- **POST** [localhost:8084/niveauliquide/add?valeur={float}&citerneID={int}](http://localhost:8084/niveauliquide/add?valeur={float}&citerneID={int})
+  - Ajouter une nouvelle mesure de niveau de liquide
+
+### Humidite - Port 8085
+Surveillance de l'humidité des citernes.
+
+- **GET** [localhost:8085/humidite/list](http://localhost:8085/humidite/list)
+  - Liste toutes les mesures d'humidité
+- **GET** [localhost:8085/humidite/last/{citerneID}](http://localhost:8085/humidite/last/{citerneID})
+  - Obtenir la dernière mesure d'humidité d'une citerne
+- **POST** [localhost:8085/humidite/add?valeur={float}&citerneID={int}](http://localhost:8085/humidite/add?valeur={float}&citerneID={int})
+  - Ajouter une nouvelle mesure d'humidité
+
+### Log - Port 8083
+Service de journalisation des événements et actions.
+
+- **GET** [localhost:8083/log/list](http://localhost:8083/log/list)
+  - Liste tous les logs
+- **GET** [localhost:8083/log/list/{idCiterne}](http://localhost:8083/log/list/{idCiterne})
+  - Obtenir les logs d'une citerne spécifique
+- **POST** [localhost:8083/log/add](http://localhost:8083/log/add)
+  - Ajouter un nouveau log (body: LogEntity JSON)
+
+### Refroidissement - Port 8081
+Contrôle du système de refroidissement.
+
+- **POST** [localhost:8081/refroidissement/apply](http://localhost:8081/refroidissement/apply)
+  - Activer/désactiver le refroidissement (body: Refroidissement JSON)
+- **GET** [localhost:8081/refroidissement/state/{citerneID}](http://localhost:8081/refroidissement/state/{citerneID})
+  - Obtenir l'état du refroidissement d'une citerne
+
+### Extraction - Port 8086
+Contrôle du système d'extraction d'humidité.
+
+- **POST** [localhost:8086/extraction/apply](http://localhost:8086/extraction/apply)
+  - Activer/désactiver l'extraction (body: Extraction JSON)
+- **GET** [localhost:8086/extraction/state/{citerneID}](http://localhost:8086/extraction/state/{citerneID})
+  - Obtenir l'état de l'extraction d'une citerne
 
 ## Interface Utilisateur
 

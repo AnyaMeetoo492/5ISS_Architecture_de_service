@@ -17,6 +17,11 @@
     <modules>
         <module>Microservices/Configuration</module>
         <module>Microservices/Decouverte</module>
+        <module>Microservices/Citernes</module>
+        <module>Microservices/Extraction</module>
+        <module>Microservices/Humidite</module>
+        <module>Microservices/Log</module>
+        <module>Microservices/NiveauLiquide</module>
         <module>Microservices/Temperature</module>
         <module>Microservices/Refroidissement</module>
         <module>Microservices/Orchestrateur</module>

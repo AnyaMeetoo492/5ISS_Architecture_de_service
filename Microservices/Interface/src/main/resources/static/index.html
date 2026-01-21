@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cave à Vin - Monitoring Dashboard</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <h1 class="title">🍷 Cave à Vin</h1>
+            <p class="subtitle">Système de Monitoring et Contrôle</p>
+        </header>
+
+        <!-- Services Status Bar -->
+        <div class="services-status">
+            <div class="status-group">
+                <div class="service-status active" id="status-decouverte">
+                    <span class="status-dot"></span>
+                    <span>Découverte</span>
+                </div>
+                <div class="service-status active" id="status-configuration">
+                    <span class="status-dot"></span>
+                    <span>Configuration</span>
+                </div>
+                <div class="service-status active" id="status-orchestrateur">
+                    <span class="status-dot"></span>
+                    <span>Orchestrateur</span>
+                </div>
+                <div class="service-status active" id="status-logs">
+                    <span class="status-dot"></span>
+                    <span>Logs</span>
+                </div>
+            </div>
+            <div class="status-group">
+                <div class="service-status active" id="status-temperature">
+                    <span class="status-dot"></span>
+                    <span>Température</span>
+                </div>
+                <div class="service-status active" id="status-humidite">
+                    <span class="status-dot"></span>
+                    <span>Humidité</span>
+                </div>
+                <div class="service-status active" id="status-niveauliquide">
+                    <span class="status-dot"></span>
+                    <span>Niveau Liquide</span>
+                </div>
+                <div class="service-status active" id="status-extraction">
+                    <span class="status-dot"></span>
+                    <span>Extraction</span>
+                </div>
+                <div class="service-status active" id="status-refroidissement">
+                    <span class="status-dot"></span>
+                    <span>Refroidissement</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Citerne Selector -->
+        <div class="citerne-selector-wrapper">
+            <label for="citerne-select" class="selector-label">Sélectionner une citerne</label>
+            <div style="display: flex; gap: 10px; align-items: center;">
+                <select id="citerne-select" class="citerne-select" style="flex: 1;">
+                    <option value="">Chargement...</option>
+                </select>
+                <button onclick="showAddCiterneModal()" class="add-citerne-button" title="Ajouter une citerne">
+                    ➕ Nouvelle Citerne
+                </button>
+            </div>
+        </div>
+
+        <!-- Add Citerne Modal -->
+        <div id="add-citerne-modal" class="modal" style="display: none;">
+            <div class="modal-content">
+                <span class="modal-close" onclick="closeAddCiterneModal()">&times;</span>
+                <h2>➕ Ajouter une Nouvelle Citerne</h2>
+                <div class="modal-form">
+                    <div class="form-group">
+                        <label for="new-citerne-id">ID de la citerne</label>
+                        <input type="number" id="new-citerne-id" placeholder="Ex: 5" class="form-input">
+                    </div>
+                    <div class="form-group">
+                        <label for="new-citerne-name">Nom de la citerne</label>
+                        <input type="text" id="new-citerne-name" placeholder="Ex: Citerne 5" class="form-input">
+                    </div>
+                    <div class="modal-actions">
+                        <button onclick="addNewCiterne()" class="modal-button modal-button-primary">Créer</button>
+                        <button onclick="closeAddCiterneModal()" class="modal-button modal-button-secondary">Annuler</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Sensors Cards -->
+        <div class="sensors-grid">
+            <!-- Humidity Card -->
+            <div class="sensor-card humidity-card">
+                <div class="card-header">
+                    <span class="card-icon">💧</span>
+                    <h3>Taux d'humidité</h3>
+                </div>
+                <div class="card-value" id="humidity-value">--</div>
+                <div class="card-unit">%</div>
+                <div class="card-input-group">
+                    <input type="number" id="input-humidity" placeholder="Valeur" class="card-input">
+                    <button onclick="sendHumidity()" class="card-button">Envoyer</button>
+                </div>
+            </div>
+
+            <!-- Temperature Card -->
+            <div class="sensor-card temperature-card">
+                <div class="card-header">
+                    <span class="card-icon">🌡️</span>
+                    <h3>Température</h3>
+                </div>
+                <div class="card-value" id="temperature-value">--</div>
+                <div class="card-unit">°C</div>
+                <div class="card-input-group">
+                    <input type="number" id="input-temperature" placeholder="Valeur" class="card-input">
+                    <button onclick="sendTemperature()" class="card-button">Envoyer</button>
+                </div>
+            </div>
+
+            <!-- Liquid Level Card -->
+            <div class="sensor-card liquid-card">
+                <div class="card-header">
+                    <span class="card-icon">📊</span>
+                    <h3>Niveau de liquide</h3>
+                </div>
+                <div class="card-value" id="liquid-value">--</div>
+                <div class="card-unit">L</div>
+                <div class="card-input-group">
+                    <input type="number" step="0.1" id="input-liquid" placeholder="Valeur" class="card-input">
+                    <button onclick="sendLiquidLevel()" class="card-button">Envoyer</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Last Event -->
+        <div class="event-card">
+            <div class="event-header">
+                <span class="event-icon">📋</span>
+                <h3>Dernier Événement</h3>
+            </div>
+            <div class="event-content" id="last-event">
+                En attente d'événements...
+            </div>
+        </div>
+
+        <!-- Action Status Cards -->
+        <div class="actions-grid">
+            <!-- Cooling Status -->
+            <div class="action-card cooling-card" id="cooling-card">
+                <div class="action-header">
+                    <span class="action-icon">❄️</span>
+                    <h3>Refroidissement</h3>
+                </div>
+                <div class="action-status" id="cooling-status">INACTIF</div>
+                <div class="action-indicator"></div>
+            </div>
+
+            <!-- Extraction Status -->
+            <div class="action-card extraction-card" id="extraction-card">
+                <div class="action-header">
+                    <span class="action-icon">💨</span>
+                    <h3>Extraction</h3>
+                </div>
+                <div class="action-status" id="extraction-status">INACTIF</div>
+                <div class="action-indicator"></div>
+            </div>
+        </div>
+
+        <!-- Trigger Decision Button -->
+        <div class="trigger-section">
+            <button onclick="triggerDecision()" class="trigger-button">
+                🔄 Lancer Analyse Orchestrateur
+            </button>
+        </div>
+    </div>
+
+    <script src="js/app.js"></script>
+</body>
+</html>

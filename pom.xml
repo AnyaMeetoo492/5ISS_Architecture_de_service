@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 
+         http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>fr.insa.ms</groupId>
+    <artifactId>MicroservicesParent</artifactId>
+    <version>1.0.0</version>
+    <packaging>pom</packaging>
+
+    <name>Microservices Parent POM</name>
+    <description>Parent POM for all microservices</description>
+
+    <!-- Define modules in execution order -->
+    <modules>
+        <module>Microservices/Configuration</module>
+        <module>Microservices/Decouverte</module>
+        <module>Microservices/Citernes</module>
+        <module>Microservices/Extraction</module>
+        <module>Microservices/Humidite</module>
+        <module>Microservices/Log</module>
+        <module>Microservices/NiveauLiquide</module>
+        <module>Microservices/Temperature</module>
+        <module>Microservices/Refroidissement</module>
+        <module>Microservices/Orchestrateur</module>
+        <module>Microservices/Interface</module>
+    </modules>
+
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    </properties>
+
+</project>

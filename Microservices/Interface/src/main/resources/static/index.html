@@ -61,9 +61,36 @@
         <!-- Citerne Selector -->
         <div class="citerne-selector-wrapper">
             <label for="citerne-select" class="selector-label">Sélectionner une citerne</label>
-            <select id="citerne-select" class="citerne-select">
-                <option value="">Chargement...</option>
-            </select>
+            <div style="display: flex; gap: 10px; align-items: center;">
+                <select id="citerne-select" class="citerne-select" style="flex: 1;">
+                    <option value="">Chargement...</option>
+                </select>
+                <button onclick="showAddCiterneModal()" class="add-citerne-button" title="Ajouter une citerne">
+                    ➕ Nouvelle Citerne
+                </button>
+            </div>
+        </div>
+
+        <!-- Add Citerne Modal -->
+        <div id="add-citerne-modal" class="modal" style="display: none;">
+            <div class="modal-content">
+                <span class="modal-close" onclick="closeAddCiterneModal()">&times;</span>
+                <h2>➕ Ajouter une Nouvelle Citerne</h2>
+                <div class="modal-form">
+                    <div class="form-group">
+                        <label for="new-citerne-id">ID de la citerne</label>
+                        <input type="number" id="new-citerne-id" placeholder="Ex: 5" class="form-input">
+                    </div>
+                    <div class="form-group">
+                        <label for="new-citerne-name">Nom de la citerne</label>
+                        <input type="text" id="new-citerne-name" placeholder="Ex: Citerne 5" class="form-input">
+                    </div>
+                    <div class="modal-actions">
+                        <button onclick="addNewCiterne()" class="modal-button modal-button-primary">Créer</button>
+                        <button onclick="closeAddCiterneModal()" class="modal-button modal-button-secondary">Annuler</button>
+                    </div>
+                </div>
+            </div>
         </div>
 
         <!-- Sensors Cards -->

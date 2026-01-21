@@ -475,6 +475,58 @@ function showNotification(message, type) {
     }, 3000);
 }
 
+// Show Add Citerne Modal
+function showAddCiterneModal() {
+    document.getElementById('add-citerne-modal').style.display = 'flex';
+}
+
+// Close Add Citerne Modal
+function closeAddCiterneModal() {
+    document.getElementById('add-citerne-modal').style.display = 'none';
+    document.getElementById('new-citerne-id').value = '';
+    document.getElementById('new-citerne-name').value = '';
+}
+
+// Add New Citerne
+async function addNewCiterne() {
+    const id = parseInt(document.getElementById('new-citerne-id').value);
+    const name = document.getElementById('new-citerne-name').value.trim();
+    
+    if (isNaN(id) || id <= 0) {
+        alert('Veuillez entrer un ID valide (nombre positif)');
+        return;
+    }
+    
+    if (!name) {
+        alert('Veuillez entrer un nom pour la citerne');
+        return;
+    }
+    
+    try {
+        const response = await fetch(`${API_BASE}:${PORTS.citernes}/citernes/add/${id}?citerneName=${encodeURIComponent(name)}`, {
+            method: 'POST'
+        });
+        
+        if (response.ok) {
+            console.log('Citerne added successfully:', id, name);
+            showNotification(`Citerne "${name}" créée avec succès!`, 'success');
+            closeAddCiterneModal();
+            // Reload citernes list
+            await loadCiternesList();
+            // Set the new citerne as current
+            currentCiterneId = id;
+            document.getElementById('citerne-select').value = id;
+            refreshAllData();
+        } else {
+            const errorText = await response.text();
+            showNotification('Erreur lors de la création: ' + errorText, 'error');
+        }
+    } catch (error) {
+        console.error('Error adding citerne:', error);
+        showNotification('Erreur de connexion', 'error');
+    }
+}
+
 // Add animations for notifications
 const style = document.createElement('style');
 style.textContent = `
@@ -498,6 +550,135 @@ style.textContent = `
             transform: translateX(400px);
             opacity: 0;
         }
+    }
+    
+    .modal {
+        display: none;
+        position: fixed;
+        z-index: 10000;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.7);
+        align-items: center;
+        justify-content: center;
+    }
+    
+    .modal-content {
+        background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+        padding: 2rem;
+        border-radius: 20px;
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+        max-width: 500px;
+        width: 90%;
+        color: white;
+        position: relative;
+    }
+    
+    .modal-close {
+        position: absolute;
+        right: 1.5rem;
+        top: 1.5rem;
+        font-size: 2rem;
+        cursor: pointer;
+        color: #aaa;
+        transition: color 0.3s;
+    }
+    
+    .modal-close:hover {
+        color: #fff;
+    }
+    
+    .modal-content h2 {
+        margin-bottom: 1.5rem;
+        font-size: 1.5rem;
+    }
+    
+    .modal-form {
+        display: flex;
+        flex-direction: column;
+        gap: 1.5rem;
+    }
+    
+    .form-group {
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+    
+    .form-group label {
+        font-weight: 600;
+        font-size: 0.9rem;
+        color: #b8b8d1;
+    }
+    
+    .form-input {
+        padding: 0.75rem;
+        border-radius: 10px;
+        border: 2px solid #2d3561;
+        background: rgba(255, 255, 255, 0.05);
+        color: white;
+        font-size: 1rem;
+        transition: all 0.3s;
+    }
+    
+    .form-input:focus {
+        outline: none;
+        border-color: #6366f1;
+        background: rgba(255, 255, 255, 0.1);
+    }
+    
+    .modal-actions {
+        display: flex;
+        gap: 1rem;
+        margin-top: 1rem;
+    }
+    
+    .modal-button {
+        flex: 1;
+        padding: 0.75rem;
+        border-radius: 10px;
+        border: none;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.3s;
+    }
+    
+    .modal-button-primary {
+        background: linear-gradient(135deg, #6366f1, #8b5cf6);
+        color: white;
+    }
+    
+    .modal-button-primary:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(99, 102, 241, 0.4);
+    }
+    
+    .modal-button-secondary {
+        background: rgba(255, 255, 255, 0.1);
+        color: white;
+    }
+    
+    .modal-button-secondary:hover {
+        background: rgba(255, 255, 255, 0.15);
+    }
+    
+    .add-citerne-button {
+        padding: 0.75rem 1.5rem;
+        background: linear-gradient(135deg, #10b981, #059669);
+        color: white;
+        border: none;
+        border-radius: 12px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.3s;
+        white-space: nowrap;
+    }
+    
+    .add-citerne-button:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(16, 185, 129, 0.4);
     }
 `;
 document.head.appendChild(style);

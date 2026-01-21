@@ -65,6 +65,8 @@ Ce script :
 
 Une interface web moderne et responsive a été développée pour monitorer et contrôler les citernes de vin.
 
+![Interface Web](Images/Interface_web.png)
+
 ### Accès à l'interface
 
 L'interface est accessible sur le port **8078** :

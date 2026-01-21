@@ -256,5 +256,3 @@ Contrôle du système d'extraction d'humidité.
   - Activer/désactiver l'extraction (body: Extraction JSON)
 - **GET** [localhost:8086/extraction/state/{citerneID}](http://localhost:8086/extraction/state/{citerneID})
   - Obtenir l'état de l'extraction d'une citerne
-
-## Conclusion

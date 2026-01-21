@@ -29,9 +29,8 @@ Chaque citerne aura ses capteurs et ses actionnneurs.
 
 ### Controlling / Actionneurs 
 
-- Si la température dépasse le seuil on actionne un refroidissement
-- Si l'humidité dépasse le seuile on fait une extraction
-- L'utilisateur a également la possibilité de d'actionné les vannes entre les différentes citernes
+- Si la température dépasse le seuil on actionne un refroidissement (> 35C)
+- Si l'humidité dépasse le seuile on fait une extraction (> 40%)
 
 ## Microservices et Bases de données associées 
 
@@ -61,6 +60,44 @@ Ce script :
 - Arrête tous les services quand vous appuyez sur **Ctrl+C**
 
 **Avantage :** Un seul script pour tout faire - construction + démarrage des services !
+
+## Interface Utilisateur
+
+Une interface web moderne et responsive a été développée pour monitorer et contrôler les citernes de vin.
+
+### Accès à l'interface
+
+L'interface est accessible sur le port **8078** :
+- URL: [http://localhost:8078](http://localhost:8078)
+
+### Fonctionnalités
+
+- **Monitoring en temps réel** : Affichage des valeurs actuelles de température, humidité et niveau de liquide
+- **Contrôle des citernes** : Sélection de la citerne à surveiller via un menu déroulant
+- **Ajout de mesures** : Possibilité d'ajouter manuellement des valeurs pour chaque capteur
+- **Statut des services** : Visualisation de l'état de tous les microservices (actif/inactif)
+- **Actions automatiques** : Affichage de l'état du refroidissement et de l'extraction
+- **Derniers événements** : Consultation des derniers logs et observations
+- **Orchestration** : Bouton pour lancer manuellement l'analyse de l'orchestrateur
+
+### Design
+
+L'interface utilise :
+- Design moderne avec dégradés et animations fluides
+- Thème sombre pour une meilleure lisibilité
+- Interface responsive compatible mobile et desktop
+- Icônes emoji pour une identification rapide
+- Notifications toast pour les confirmations d'actions
+- Rafraîchissement automatique des données toutes les 5 secondes
+
+### Lancement du microservice Interface
+
+```bash
+cd Microservices/Interface
+mvn spring-boot:run
+```
+
+Ou avec le script de démarrage automatique qui inclut désormais l'interface.
 
 ### Construire tous les microservices
 
@@ -109,6 +146,28 @@ Construire un seul microservice sans construire tous les autres :
 ```bash
 mvn -pl Microservices/Configuration clean package
 ```
+
+### Arrêter un microservice spécifique
+
+Pour arrêter un microservice en cours d'exécution :
+
+```bash
+pkill -f "Microservices/<Nom_microservice>"
+```
+
+Ou si le service s'exécute via Maven :
+
+```bash
+cd Microservices/<Nom_microservice>
+# Appuyer sur Ctrl+C dans le terminal où le service est en cours d'exécution
+```
+
+Pour arrêter tous les services à la fois :
+
+```bash
+./stop-services.sh
+```
+
 
 ## API Endpoints
 
@@ -195,43 +254,5 @@ Contrôle du système d'extraction d'humidité.
   - Activer/désactiver l'extraction (body: Extraction JSON)
 - **GET** [localhost:8086/extraction/state/{citerneID}](http://localhost:8086/extraction/state/{citerneID})
   - Obtenir l'état de l'extraction d'une citerne
-
-## Interface Utilisateur
-
-Une interface web moderne et responsive a été développée pour monitorer et contrôler les citernes de vin.
-
-### Accès à l'interface
-
-L'interface est accessible sur le port **8078** :
-- URL: [http://localhost:8078](http://localhost:8078)
-
-### Fonctionnalités
-
-- **Monitoring en temps réel** : Affichage des valeurs actuelles de température, humidité et niveau de liquide
-- **Contrôle des citernes** : Sélection de la citerne à surveiller via un menu déroulant
-- **Ajout de mesures** : Possibilité d'ajouter manuellement des valeurs pour chaque capteur
-- **Statut des services** : Visualisation de l'état de tous les microservices (actif/inactif)
-- **Actions automatiques** : Affichage de l'état du refroidissement et de l'extraction
-- **Derniers événements** : Consultation des derniers logs et observations
-- **Orchestration** : Bouton pour lancer manuellement l'analyse de l'orchestrateur
-
-### Design
-
-L'interface utilise :
-- Design moderne avec dégradés et animations fluides
-- Thème sombre pour une meilleure lisibilité
-- Interface responsive compatible mobile et desktop
-- Icônes emoji pour une identification rapide
-- Notifications toast pour les confirmations d'actions
-- Rafraîchissement automatique des données toutes les 5 secondes
-
-### Lancement du microservice Interface
-
-```bash
-cd Microservices/Interface
-mvn spring-boot:run
-```
-
-Ou avec le script de démarrage automatique qui inclut désormais l'interface.
 
 ## Conclusion
